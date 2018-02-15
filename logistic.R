@@ -1,6 +1,7 @@
 # Load packages
 library(ROCR)
 library(caret)
+library(ggplot2)
 
 pima = read.csv('pima.csv')
 
