@@ -59,7 +59,7 @@ summary(log1)
 ##
 ## Number of Fisher Scoring iterations: 5
 ```
-Based on the significant features, we create a reduced model that only including glucose, bmi, and diabetes pedigree.
+Based on the significant features, we create a reduced model that only includes glucose, bmi, and diabetes pedigree.
 ```r
 log2 = glm(test~glucose+bmi+diabetes,data = clean.pima,family = binomial)
 summary(log2)
@@ -90,7 +90,7 @@ summary(log2)
 ##
 ##Number of Fisher Scoring iterations: 5
 ```
-We test the goodness of fit by comparing the deviance of the reduced model with that of the full model. Our null hypothesis is that there is no difference between reduced model and the full model. In other words, if there is no significant increase in the deviance when we remove the features, then we can use the reduced model instead of the full model.
+We test the goodness of fit by comparing the deviance of the reduced model with that of the full model. Our null hypothesis shows that there is no difference between reduced model and the full model. In other words, if there is no significant increase in the deviance when we remove the features, then we can use the reduced model instead of the full model.
 
 The result indicates that there is a significant increase in the residual sum of squares (Resid. Dev), indicating that the reduced model introduces a significant amount of deviance. Thus, we reject the null hypothesis.
 
@@ -109,7 +109,7 @@ anova(log1,log2,test = 'Chi')
 ## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 ```
 
-From the rest of the features, we re-add the age variables as it has a p-value that was very close to our threshold for significance. We found that in this new model, age becomes highly significant (8.00e-05), suggesting that the interaction of age with the other features in the full model decreases age's impact.
+From the rest of the features, we re-add the age variables as it has a p-value that was very close to our threshold for significance. We found that in this new model, age becomes highly significant (8.00e-05), suggesting that the interaction of age with the other features decreases the impact of age.
 ```r
 log3 = glm(test~glucose+bmi+diabetes+age,data = clean.pima,family = binomial)
 summary(log3)
@@ -163,11 +163,11 @@ as.numeric(perf@y.values)
 
 [1] 0.8604521
 ```
-We plot the true positive rate + true negative rate vs threshold to see how the model performs at various thresholds. Based on the plot, it seems that a threshold of 0.3 yields the highest rate of true positives and negatives.
+We plot the true positive rate + true negative rate vs threshold to see how the model performs at various thresholds. Based on the plot,  a threshold of about 0.3 yields the highest rate of true positives and negatives.
 
 ![Threshold](https://github.com/oceanliu2018/Pima-Indian-Diabetes/blob/master/Threshold.png)
 
-At a threshold of 0.3, we compute the following confusion matrix. The model has an accuracy of 0.7755 with a 95% confidence interval of (0.7309, 0.8159) 
+At a threshold of 0.3, we compute the following confusion matrix. The model has an accuracy of 0.7755 with a 95% confidence interval of (0.7309, 0.8159).
 ```
           Reference
 Prediction   0   1
@@ -189,6 +189,6 @@ exp(coef(log3))
 ```
 The features that were not strong predictors can also be accounted for. Diastolic results were not a good indicator of diabetes, which is to be expected given the lack of correlation with the test results. This suggests that though high blood pressure is a major symptom of diabetes, those who have hypertension may not necessarily be more prone to diabetes. Tricep skin thickness is an estimator of body fat like bmi. Insulin also fails to outperform glucose, suggesting that directly measuring glucose levels is more effective. Though number of pregnancies was not significant in our model, it had the next lowest p-value and should be considered for future analyses. 
 
-One issue is the lack of documentation on the diabetes pedigree function. Since we do not know how it is calculated nor its units, it is impossible to assess how much impact it has in increasing the odds of diabetes. Conversely, it is easy to gather patient information on bmi, age, and glucose level. 
+One issue is the lack of documentation on the diabetes pedigree function. Since we do not know how it is calculated nor its units, it is impossible to assess how much it increasing the odds of diabetes. Conversely, it is easy to gather patient information on bmi, age, and glucose level. 
 
 Since the model was created from data only including female Pima Indians, further study is required to determine if the model can be applied to other groups. Thus, future analyses should expand on the sample to include people of different ethnicities and both genders. Most importantly, the size of the dataset is not very large, so the model may not be very robust. 
